@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary-400: #3b6ebb;
+  --color-primary-500: #2255aa;
+  --color-primary-600: #1b4488;
+
+  --color-bg-light: #ffffff;
+  --color-bg-dark: #000000;
+  --color-surface-dark: #0a0a0a;
+  --color-border-dark: #27272a;
+  --color-border-light: #e4e4e7;
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    monospace;
+}
+
+@layer base {
+  body {
+    @apply m-0 p-0 overflow-x-hidden bg-[var(--color-bg-light)] text-[#111827] dark:bg-[var(--color-bg-dark)] dark:text-[#ededed] antialiased selection:bg-[var(--color-primary-500)]/20 selection:text-[var(--color-primary-500)] transition-colors duration-150 ease-in-out;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.3);
+  border-radius: 20px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(82, 82, 91, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.5);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(113, 113, 122, 0.8);
+}
