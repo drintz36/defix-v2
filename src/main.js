@@ -324,15 +324,23 @@ btnDebug.addEventListener('click', async () => {
   outputLoading.classList.remove('hidden');
 
   try {
-    const res = await fetch('/api/debug', {
+    // If the frontend is hosted on GitHub Pages, you MUST change this string to your live Backend URL (e.g. 'https://my-backend.onrender.com/api/debug')
+    const API_URL = '/api/debug';
+
+    const res = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ buggyCode: code, language: selectedLanguage })
     });
 
+    const contentType = res.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new Error("The backend AI server is unreachable. (Received an HTML error page instead of API JSON). If you are testing this on GitHub Pages, remember that GitHub Pages cannot host Node.js backends. You must deploy the backend server code and update API_URL.");
+    }
+
     if (!res.ok) {
-      const errData = await res.json();
-      throw new Error(errData.error || 'Failed to analyze code.');
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP Error ${res.status}`);
     }
 
     const data = await res.json();
